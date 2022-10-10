@@ -62,8 +62,8 @@ def test_remove_non_alphanumeric():
     result3 = datacleaner.remove_non_alphanumeric(test_caption3)
     result4 = datacleaner.remove_non_alphanumeric(test_caption4)
 
-    assert result1 == "The lonely wolf, sits in the yellow house." 
-    assert result2 == "We, the guardians of the galaxy, came to put you to an end !"
+    assert result1 == "The lonely wolf sits in the yellow house" 
+    assert result2 == "We the guardians of the galaxy came to put you to an end "
     assert result3 == "This sentence contains no punctuation"
     assert result4 == "Sentence without stopwords cool thing guess"
     

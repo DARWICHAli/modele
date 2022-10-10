@@ -48,7 +48,16 @@ def delete_stopwords(token_list):
     return output
 
 def remove_non_alphanumeric(caption):
-    output = ''.join([i for i in caption if i.isalnum()])
+    """
+    Removes non alphanumerical characters (including punctuation) from the caption.
+    Args:
+        caption (string): the caption of a picture
+
+    Returns:
+        string: the cleaned caption
+    """
+    output = ''.join(ch for ch in caption if ch.isalnum() or ch == " ")
+
     return output
 
 def clean_captions(dataset, column_name_of_captions):
@@ -62,11 +71,12 @@ def clean_captions(dataset, column_name_of_captions):
         array = array of tokenized captions
     """
     clean_msgs= dataset[column_name_of_captions].apply(lambda x: delete_ponctuation_of_caption(x)).copy()
-    clean_msgs = clean_msgs.apply(lambda x: remove_non_alphanumeric(x))
     clean_msgs_lowered = clean_msgs.apply(lambda x: lower_caption(x)).copy()
     clean_msgs_lowered_tokenized = clean_msgs_lowered.apply(lambda x: tokenize_caption(x)).copy()
     clean_msgs_lowered_tokenized_noStopwords = clean_msgs_lowered_tokenized.apply(lambda x: delete_stopwords(x))
-    return clean_msgs_lowered_tokenized_noStopwords
+    clean_msgs_lowered_tokenized_noStopwords_no_alphanumeric = clean_msgs_lowered_tokenized_noStopwords.apply(lambda x: remove_non_alphanumeric(x))
+
+    return clean_msgs_lowered_tokenized_noStopwords_no_alphanumeric
     
     
     
