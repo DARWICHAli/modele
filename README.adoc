@@ -34,7 +34,7 @@ D'un point de vue tensoriel, si la représentation latente est de dimension stem
 
 _Oui, le M2 n'utilise pas la position des features ????_
 
-.Traitement d'un image par l'encodeur
+.Traitement d'une image par l'encodeur
 image::res/encoder.png[Encodeur pipeline]
 
 Par exemple, si l'encodeur utilise link:https://keras.io/api/applications/resnet/[ResNet] , la dimension de plongement est 2048, donc stem:[K=2048] et la sortie sera de dimension stem:[(N, 2048)].
