@@ -15,21 +15,21 @@ class Vocabulary:
     
         print('Start building vocabulary!')
 
-        for sentence in sentence_list: 
+        for sentences in sentence_list: 
+            for sentence in sentences:
+                for word in sentence:
 
-            for word in sentence:
+                    if word not in frequencies:
+                        frequencies[word]=1
 
-                if word not in frequencies:
-                    frequencies[word]=1
+                    else:
+                        frequencies[word] += 1
 
-                else:
-                    frequencies[word] += 1
+                    if frequencies[word] == self.freq_threshold:
 
-                if frequencies[word] == self.freq_threshold:
-
-                    self.stoi[word]  = idx
-                    self.itos[idx] = word
-                    idx += 1
+                        self.stoi[word]  = idx
+                        self.itos[idx] = word
+                        idx += 1
         self.freq = frequencies
         print('Vocabulary built!')
   
