@@ -2,3 +2,8 @@
 *.jpeg
 *.png
 *.zip
+VOC2012_test/
+VOC2012_train_val/
+__pycache__
+annotations
+homme_femme

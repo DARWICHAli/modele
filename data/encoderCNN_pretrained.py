@@ -1,9 +1,12 @@
 from torchvision import models
+from torchvision.models.detection import fasterrcnn_resnet50_fpn_v2, FasterRCNN_ResNet50_FPN_V2_Weights
 from torch import nn
 from PIL import Image
 import torchvision.transforms as T
 import cv2 
 import matplotlib.pyplot as plt
+from torchvision.io.image import read_image
+
 
 class EncoderCNN(nn.Module):
     """Encoder inputs images and returns feature boxes.
@@ -12,7 +15,10 @@ class EncoderCNN(nn.Module):
     
     def __init__(self):
         super(EncoderCNN, self).__init__()
-        self.model = models.detection.fasterrcnn_resnet50_fpn(pretrained=True) 
+        
+        self.weights = FasterRCNN_ResNet50_FPN_V2_Weights.DEFAULT
+        
+        self.model = fasterrcnn_resnet50_fpn_v2(weights=self.weights, pretrained=True) 
         
         self.model.eval()
         
@@ -39,16 +45,16 @@ class EncoderCNN(nn.Module):
             - class, box coordinates are obtained, but only prediction score > threshold
                 are chosen.
         """
-        img = Image.open(img_path)
-        transform = T.Compose([T.ToTensor()])
-        img = transform(img)
+        img_clean = read_image(img_path)
+        transform = self.weights.transforms()
+        img = transform(img_clean)
         pred = self.model([img])
-        pred_class = [self.coco_instances[i] for i in list(pred[0]['labels'].numpy())]
-        pred_boxes = [[(i[0], i[1]), (i[2], i[3])] for i in list(pred[0]['boxes'].detach().numpy())]
+        pred_class = pred[0]['labels']
+        pred_boxes = pred[0]['boxes'].detach()
         pred_score = list(pred[0]['scores'].detach().numpy())
         pred_t = [pred_score.index(x) for x in pred_score if x>threshold][-1]
         pred_boxes = pred_boxes[:pred_t+1]
         pred_class = pred_class[:pred_t+1]
-        return  img, pred_boxes, pred_class
+        return  img_clean, img, pred_boxes, pred_class, self.weights
 
    
