@@ -8,12 +8,14 @@ def get_segmentation_model():
     raise NotImplementedError
     return None
 
-def segment_picture(model, picture):
+def segment_picture(model, picture, treshhold):
     """
     Compute and returns segmentation boxes from 'picture' using 'model'.
     :param model: Model returned by :py:func:`get_segmentation_model`.
-    :param picture: Raw picture **without any kind of preprocessing**.
-    :type picture: To define.
+    :param picture: Raw picture **without any kind of preprocessing **.
+    :param treshhold: the minimum score of the proposed boxes to select.
+    :type picture: torchvision.io.image (read_image function).
+    :type treshhold: integer.
     :return: A tuple containing (boxes, features, proba_cls). 'boxes' is a box compatible with torchvision.utils.draw_bounding_boxes, features is the embedding vector for each box, proba_cls is the probability for each class for each box.
     :rtype: (np.array(N, 2, 2), np.array(N, 2048), np.array(N, 1601))
     """
