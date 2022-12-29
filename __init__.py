@@ -1,12 +1,14 @@
 # High level API for image captionning
+from feature_extractor import FeatureExtractor
+import encoderCNN_pretrained
 
 def get_segmentation_model():
     """
     Construct and return segmentation model.
     :return: A model compatible with :py:func:`segment_picture`.
     """
-    raise NotImplementedError
-    return None
+    modelClass = encoderCNN_pretrained.EncoderCNN()
+    return modelClass
 
 def segment_picture(model, picture, treshhold):
     """
@@ -15,12 +17,14 @@ def segment_picture(model, picture, treshhold):
     :param picture: Raw picture **without any kind of preprocessing **.
     :param treshhold: the minimum score of the proposed boxes to select.
     :type picture: torchvision.io.image (read_image function).
-    :type treshhold: integer.
+    :type treshhold: float.
     :return: A tuple containing (boxes, features, proba_cls). 'boxes' is a box compatible with torchvision.utils.draw_bounding_boxes, features is the embedding vector for each box, proba_cls is the probability for each class for each box.
     :rtype: (np.array(N, 2, 2), np.array(N, 2048), np.array(N, 1601))
     """
-    raise NotImplementedError
-    return (boxes, features, proba_cls)
+    imgT, boxes, pred_score, weights = model.get_prediction(picture, treshhold)  # Get predictions 
+    resnet_features = FeatureExtractor(model.model, layers=['backbone.body.layer4', 'backbone.fpn', 'rpn', 'roi_heads.box_roi_pool', 'backbone.body.layer3', 'roi_heads', 'roi_heads.box_roi_pool', 'backbone'])
+    features = resnet_features([imgT])
+    return (boxes, features, pred_score)
 
 def get_captionning_model():
     """
