@@ -11,7 +11,13 @@ v1.0 2022-11-16
 
 Ce dépôt défini le code des différents modèles.
 
-Ce fichier commence par expliquer comment installer ce module. La suite explique brièvement les entrées/sorties et le fonctionnement global des modèles.
+Ce fichier commence par expliquer comment tester notre modèle d'annotation via une interface graphique, puis comment installer le module. La suite explique brièvement les entrées/sorties et le fonctionnement global des modèles.
+
+== Tester le modèle
+
+Le site est déployé à l'adresse suivante: https://www.captioning.zefresk.com/ 
+
+L'interface est simple à utiliser. Vous pouvez retrouver une explication detaillée de son fonctionnement dans le dépôt *Interface*: https://git.unistra.fr/image-labellisation/interface
 
 == Installation
 
