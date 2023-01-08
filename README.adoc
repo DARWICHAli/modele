@@ -11,7 +11,70 @@ v1.0 2022-11-16
 
 Ce dépôt défini le code des différents modèles.
 
-La suite de ce fichier explique brièvement les entrées/sorties et le fonctionnement global des modèles.
+Ce fichier commence par expliquer comment installer ce module. La suite explique brièvement les entrées/sorties et le fonctionnement global des modèles.
+
+== Installation
+
+=== Dépendances
+
+Ce dépôt est testé avec :
+
+- torch 1.13.1
+- opencv 0.14.1
+- detectron2 0.2.1
+
+=== Instructions
+
+L'installation du modèle est complexe mais faisable. Elle nécessite d'**installer une version précise de detectron2**.
+
+0. Cloner le dépôt et ses sous-modules.
+```bash
+git clone --recursive https://git.unistra.fr/image-labellisation/modele.git
+```
+
+1. (facultatif) Il est recommandé de créer un environnement virtuel avec venv, puis l'ouvrir :
+```bash
+python -m venv env
+source ./env/bin/activate
+```
+
+2. Installer les packages simples à installer
+```bash
+pip install torch opencv-python pycocotools h5py line_profiler spacy
+```
+
+3. Installer le modèle spacy :
+```python
+python -m spacy download en_core_web_md
+```
+
+4. Installer detectron2 v0.2.1
+```bash
+pip install -e detectron2
+```
+
+5. Compiler et installer les modèles `bua` :
+```python
+python setup.py build develop
+```
+
+6. Il reste à télécharger les modèles (voir section suivante).
+
+=== Modèles
+
+Les modèles doivent être téléchargés à part et mis dans le dossier courant.
+
+- Resnet101 entraîné sur Visual Genome. Poids originaux de link:https://github.com/peteanderson80[peteanderson80] de l'article link:https://arxiv.org/abs/1707.07998[Bottom-Up and Top-Down Attention for Image Captioning and Visual Question Answering] traduit pour detectron2 par l'équipe du MIT link:https://github.com/MILVLG/bottom-up-attention.pytorch/tree/4dbce869ad17117ca9f1df55bc5604cdbcd47f59[MILVLG] : link:https://seafile.unistra.fr/f/d1bddb9791ff4fc596f3/?dl=1[bua-caffe-frcn-r101-k10-100.pth]
+```bash
+wget --content-disposition "https://seafile.unistra.fr/f/d1bddb9791ff4fc596f3/?dl=1"
+```
+
+- M2 entraîné par link:https://github.com/aimagelab[aimagelab] dans l'article link:https://arxiv.org/abs/1912.08226[Meshed-Memory Transformer for Image Captioning] : https://seafile.unistra.fr/f/7f271666b0874097be6b/?dl=1
+```bash
+wget --content-disposition "https://seafile.unistra.fr/f/7f271666b0874097be6b/?dl=1"
+```
+
+- Tous les modèles nécessaires à l'utilisation de l'API sont disponible ici : link:https://seafile.unistra.fr/f/e0708907f3934c2ba4c5/?dl=1[https://seafile.unistra.fr/f/e0708907f3934c2ba4c5/?dl=1].
 
 == Fonctionnemment global
 
