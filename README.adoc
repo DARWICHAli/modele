@@ -15,7 +15,7 @@ Ce fichier commence par expliquer comment tester notre modèle d'annotation via 
 
 == Tester le modèle
 
-Le site est déployé à l'adresse suivante: https://www.captioning.zefresk.com/ 
+Le site est déployé à l'adresse suivante: https://captioning.zefresk.com/ 
 
 L'interface est simple à utiliser. Vous pouvez retrouver une explication detaillée de son fonctionnement dans le dépôt *Interface*: https://git.unistra.fr/image-labellisation/interface
 
